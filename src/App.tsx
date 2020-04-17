@@ -1,24 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import { MosaicView } from './MosaicView';
+import { MosaicElement, generateMosaic, animate } from "./mosaic";
+import Prando from 'prando';
 
 function App() {
+  const [animated, setAnimated] = useState(false);
+  const [mosaic, setMosaic] = useState(() => generateMosaic(new Prando(4), 3));
+
+  requestAnimationFrame(time => {
+    console.log('animating!');
+    setMosaic(animate(mosaic, time));
+    setAnimated(true);
+  });
+
+  if (!animated) {
+    return null;
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <MosaicView mosaic={mosaic} />
     </div>
   );
 }

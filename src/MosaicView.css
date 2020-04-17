@@ -1,0 +1,8 @@
+.MosaicView_layer {
+  display: flex;
+  height: 100%;
+}
+
+.MosaicView_tile {
+  height: 100%;
+}
