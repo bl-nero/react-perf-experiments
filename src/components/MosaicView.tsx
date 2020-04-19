@@ -22,7 +22,7 @@ export const MosaicView = ({ mosaic, time }: MosaicViewProps) => {
         </div>
       );
     case MosaicElementType.Layer: {
-      const split = animatedSplit(mosaic.split, mosaic.vibrationAmplitude, time);
+      const split = animatedSplit(mosaic, time);
       return (
         <div className="MosaicView_layer" style={layerStyleFor(mosaic)}>
           <div style={{ flexGrow: split }}>

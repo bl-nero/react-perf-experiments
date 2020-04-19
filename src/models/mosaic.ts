@@ -23,6 +23,7 @@ export interface MosaicLayer {
   readonly splitType: SplitType;
   readonly split: number;
   readonly vibrationAmplitude: number;
+  readonly vibrationFrequency: number;
 }
 
 export type MosaicElement = MosaicLayer | MosaicTile;
@@ -42,8 +43,9 @@ export const generateMosaic = (rng: Prando, depth: number): MosaicElement => {
     splitType: rng.nextInt(0, 1),
     split,
     vibrationAmplitude: Math.min(split, 1 - split, rng.next(0, 0.1)),
+    vibrationFrequency: rng.next(0.1, 0.5),
   };
 }
 
-export const animatedSplit = (split: number, vibrationAmplitude: number, time: number) =>
-  Math.sin(2 * Math.PI * time / 1000) * vibrationAmplitude + split;
+export const animatedSplit = ({split, vibrationAmplitude, vibrationFrequency}: MosaicLayer, time: number) =>
+  Math.sin(2 * Math.PI * time * vibrationFrequency / 1000) * vibrationAmplitude + split;
