@@ -9,18 +9,16 @@ interface CirclesViewProps {
 }
 
 export const CirclesView: FunctionComponent<CirclesViewProps> = ({ circle, time, isRoot = true }) => {
+  const rotation = circle.angularSpeed * time / 1000 + circle.phaseShift;
   const style: CSSProperties = {
-    position: 'absolute',
     backgroundColor: circle.color,
   };
   if (isRoot) {
     style.width = '100%';
     style.height = '100%';
+    style.transform = `rotate(${rotation}rad)`;
   } else {
-    const { x, y } = circleOffset(time, circle.angularSpeed, circle.phaseShift);
-    style.transform = `translate(${x}%, ${y}%)`;
-    // const rotation = circle.angularSpeed * time / 1000 + circle.phaseShift;
-    // style.transform = `rotate(${rotation}rad)`;
+    style.transform = `translateX(50%) rotate(${rotation}rad)`;
     style.width = '50%';
     style.height = '50%';
   }
