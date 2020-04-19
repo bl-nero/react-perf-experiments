@@ -28,7 +28,7 @@ export interface MosaicLayer {
 export type MosaicElement = MosaicLayer | MosaicTile;
 
 export const generateMosaic = (rng: Prando, depth: number): MosaicElement => {
-  if (depth === 0) {
+  if (depth <= 1) {
     return {
       type: MosaicElementType.Tile,
       color: randomColor(rng),

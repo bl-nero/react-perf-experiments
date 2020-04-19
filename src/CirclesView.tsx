@@ -1,5 +1,6 @@
 import React, { FunctionComponent, CSSProperties } from "react";
-import { Circle, circlePosition } from "./circles";
+import { Circle, circleOffset } from "./circles";
+import "./CirclesView.css";
 
 interface CirclesViewProps {
   circle: Circle;
@@ -9,14 +10,17 @@ interface CirclesViewProps {
 
 export const CirclesView: FunctionComponent<CirclesViewProps> = ({ circle, time, isRoot = true }) => {
   const style: CSSProperties = {
+    position: 'absolute',
     backgroundColor: circle.color,
   };
   if (isRoot) {
     style.width = '100%';
     style.height = '100%';
   } else {
-    const { x, y } = circlePosition(time, circle.phaseShift);
-    style.transform = `translate(${x}, ${y})`;
+    const { x, y } = circleOffset(time, circle.angularSpeed, circle.phaseShift);
+    style.transform = `translate(${x}%, ${y}%)`;
+    // const rotation = circle.angularSpeed * time / 1000 + circle.phaseShift;
+    // style.transform = `rotate(${rotation}rad)`;
     style.width = '50%';
     style.height = '50%';
   }
