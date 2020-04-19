@@ -1,5 +1,5 @@
 import React, { CSSProperties } from 'react';
-import { MosaicElement, MosaicElementType, MosaicLayer, SplitType, animatedSplit } from './mosaic';
+import { MosaicElement, MosaicElementType, MosaicLayer, SplitType, animatedSplit } from '../models/mosaic';
 import './MosaicView.css';
 
 interface MosaicViewProps {

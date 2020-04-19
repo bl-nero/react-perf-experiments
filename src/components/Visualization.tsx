@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useMemo } from "react";
 import Prando from "prando";
-import { generateMosaic } from "./mosaic";
+import { generateMosaic } from "../models/mosaic";
 import { MosaicView } from "./MosaicView";
-import { generateCircles } from "./circles";
+import { generateCircles } from "../models/circles";
 import { CirclesView } from "./CirclesView";
 
 export type PatternType = 'Circles' | 'Mosaic';

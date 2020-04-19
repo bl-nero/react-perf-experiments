@@ -1,8 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
-import { MosaicView } from './MosaicView';
-import { MosaicElement, generateMosaic } from "./mosaic";
-import Prando from 'prando';
 import { PatternType, Visualization } from './Visualization';
 
 function App() {
@@ -24,7 +21,7 @@ function App() {
   }, [animated]);
 
   return (
-    <div className="App">
+    <div>
       <div className="App__controlBar">
         <div className="App__controlBarSection">
           Pattern type:{' '}

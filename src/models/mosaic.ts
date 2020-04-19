@@ -45,7 +45,5 @@ export const generateMosaic = (rng: Prando, depth: number): MosaicElement => {
   };
 }
 
-const vibrationFrequency = 1;
-
 export const animatedSplit = (split: number, vibrationAmplitude: number, time: number) =>
   Math.sin(2 * Math.PI * time / 1000) * vibrationAmplitude + split;

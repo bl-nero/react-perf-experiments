@@ -1,5 +1,5 @@
 import React, { FunctionComponent, CSSProperties } from "react";
-import { Circle, circleOffset } from "./circles";
+import { Circle } from "../models/circles";
 import "./CirclesView.css";
 
 interface CirclesViewProps {
