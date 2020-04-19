@@ -2,15 +2,15 @@ import Prando from "prando";
 import { randomColor } from "./randomColor";
 
 export interface Point {
-  x: number;
-  y: number;
+  readonly x: number;
+  readonly y: number;
 }
 
 export interface Circle {
-  color: string;
-  angularSpeed: number;
-  phaseShift: number;
-  subcircles: Circle[];
+  readonly color: string;
+  readonly angularSpeed: number;
+  readonly phaseShift: number;
+  readonly subcircles: Circle[];
 }
 
 export const generateCircles = (rng: Prando, depth: number): Circle => ({
