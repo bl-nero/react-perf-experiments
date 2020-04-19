@@ -1,4 +1,5 @@
 import Prando from "prando";
+import { randomColor } from "./randomColor";
 
 export enum MosaicElementType {
   Tile,
@@ -20,7 +21,6 @@ export interface MosaicLayer {
   readonly first: MosaicElement;
   readonly second: MosaicElement;
   readonly splitType: SplitType;
-  readonly targetSplit: number;
   readonly split: number;
   readonly vibrationAmplitude: number;
 }
@@ -40,30 +40,12 @@ export const generateMosaic = (rng: Prando, depth: number): MosaicElement => {
     first: generateMosaic(rng, depth - 1),
     second: generateMosaic(rng, depth - 1),
     splitType: rng.nextInt(0, 1),
-    targetSplit: split,
     split,
-    vibrationAmplitude: Math.max(split, 1 - split, rng.next(0, 0.2)),
+    vibrationAmplitude: Math.min(split, 1 - split, rng.next(0, 0.1)),
   };
 }
 
 const vibrationFrequency = 1;
 
-export const animate = (mosaic: MosaicElement, time: number): MosaicElement => {
-  switch (mosaic.type) {
-    case MosaicElementType.Tile:
-      return mosaic;
-    case MosaicElementType.Layer: {
-      const { first, second, vibrationAmplitude, split } = mosaic;
-      return {
-        ...mosaic,
-        first: animate(first, time),
-        second: animate(second, time),
-        targetSplit: Math.sin(2 * Math.PI * time / 1000) * vibrationAmplitude + split,
-      };
-    }
-  }
-}
-
-const randomColor = (rng: Prando): string => {
-  return `rgb(${rng.next(0, 256)}, ${rng.next(0, 256)}, ${rng.next(0, 256)})`;
-}
+export const animatedSplit = (split: number, vibrationAmplitude: number, time: number) =>
+  Math.sin(2 * Math.PI * time / 1000) * vibrationAmplitude + split;

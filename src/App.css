@@ -1,3 +1,24 @@
 .App {
-  height: 100%;
+}
+
+.App__controlBar {
+  margin: 0.5em;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.App__controlBar input, .App__controlBar select {
+  font-size: 1em;
+}
+
+.App__controlBarSection {
+  margin: 0 0.5em;
+}
+
+.App__visualizationContainer {
+  width: 80vmin;
+  height: 80vmin;
+  margin: auto;
 }
