@@ -19,4 +19,5 @@
   height: 80vmin;
   margin: auto;
   position: relative;
+  overflow: hidden;
 }

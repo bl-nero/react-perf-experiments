@@ -1,3 +1,8 @@
 .CirclesView {
   border-radius: 50%;
 }
+
+
+.DOMCirclesView {
+  height: 100%;
+}
