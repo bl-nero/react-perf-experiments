@@ -1,3 +1,13 @@
+# Purpose
+
+This project started from a simple question that I received one day: exactly what does React's virtual DOM give us? Until now, I was under an impression that it's all about performance. It turns out that it's not exactly true, as proven by this experiment: merely re-rendering the entire UI with entirely new DOM nodes, even if it's not necessary to replace them, is not worse than using React to do it!
+
+That is, until we only need to replace _parts_ of it, and then, `React.memo()` saves the day.
+
+So, in general, the answer is: React's virtual DOM is only better because it spares us from complexity of deciding what to re-render from scratch, and what needs to be left intact (either because it's a scrolled componnet, an open drop-down, or a component whose state can be memoized).
+
+# Development
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
