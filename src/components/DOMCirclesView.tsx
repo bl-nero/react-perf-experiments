@@ -4,10 +4,11 @@ import "./CirclesView.css";
 
 interface DOMCirclesViewProps {
   circle: Circle;
+  animationDepth: number,
   time: number;
 }
 
-export const DOMCirclesView: FunctionComponent<DOMCirclesViewProps> = ({ circle, time }) => {
+export const DOMCirclesView: FunctionComponent<DOMCirclesViewProps> = ({ circle, animationDepth, time }) => {
   const rootRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
@@ -16,15 +17,15 @@ export const DOMCirclesView: FunctionComponent<DOMCirclesViewProps> = ({ circle,
       while (root.lastChild) {
         root.lastChild.remove();
       }
-      root.appendChild(renderCircles(circle, time));
+      root.appendChild(renderCircles(circle, animationDepth, time));
     }
   });
 
   return <div className="DOMCirclesView" ref={rootRef} />;
 };
 
-const renderCircles = (circle: Circle, time: number, isRoot = true) => {
-  const rotation = circle.angularSpeed * time / 1000 + circle.phaseShift;
+const renderCircles = (circle: Circle, animationDepth: number, time: number, isRoot = true) => {
+  const rotation = circle.angularSpeed * (animationDepth > 0 ? time : 0) / 1000 + circle.phaseShift;
   const circleElement = document.createElement('div');
   circleElement.className = 'CirclesView';
   const {style} = circleElement;
@@ -39,7 +40,7 @@ const renderCircles = (circle: Circle, time: number, isRoot = true) => {
     style.height = '50%';
   }
   for (let subcircle of circle.subcircles) {
-    circleElement.appendChild(renderCircles(subcircle, time, false));
+    circleElement.appendChild(renderCircles(subcircle, time, animationDepth - 1, false));
   }
   return circleElement;
 };

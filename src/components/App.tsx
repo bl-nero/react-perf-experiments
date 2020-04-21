@@ -6,6 +6,7 @@ function App() {
   const [algorithm, setAlgorithm] = useState(RenderingAlgorithm.React);
   const [patternType, setPatternType] = useState<PatternType>(PatternType.Circles);
   const [patternDepth, setPatternDepth] = useState(6);
+  const [animationDepth, setAnimationDepth] = useState(6);
   const [animated, setAnimated] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
 
@@ -28,6 +29,7 @@ function App() {
           Rendering algorithm:{' '}
           <select value={algorithm} onChange={event => setAlgorithm(event.target.value as RenderingAlgorithm)}>
             <option>{RenderingAlgorithm.React}</option>
+            <option>{RenderingAlgorithm.ReactMemo}</option>
             <option>{RenderingAlgorithm.DOM}</option>
           </select>
         </div>
@@ -43,9 +45,19 @@ function App() {
           <input
             type="number"
             min="1"
-            max="10"
+            max="16"
             value={patternDepth}
             onChange={event => setPatternDepth(Number.parseInt(event.target.value))}
+          />
+        </div>
+        <div className="App__controlBarSection">
+          Animation depth:{' '}
+          <input
+            type="number"
+            min="1"
+            max="16"
+            value={animationDepth}
+            onChange={event => setAnimationDepth(Number.parseInt(event.target.value))}
           />
         </div>
         <label className="App__controlBarSection">
@@ -54,7 +66,13 @@ function App() {
         </label>
       </div>
       <div className="App__visualizationContainer">
-        <Visualization algorithm={algorithm} patternType={patternType} patternDepth={patternDepth} time={currentTime} />
+        <Visualization
+          algorithm={algorithm}
+          patternType={patternType}
+          patternDepth={patternDepth}
+          time={currentTime}
+          animationDepth={animationDepth}
+        />
       </div>
     </div>
   );

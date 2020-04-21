@@ -1,11 +1,6 @@
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, ComponentType } from 'react';
 import { MosaicElement, MosaicElementType, MosaicLayer, SplitType, animatedSplit } from '../models/mosaic';
 import './MosaicView.css';
-
-interface MosaicViewProps {
-  mosaic: MosaicElement;
-  time: number;
-}
 
 const layerStyleFor = (layer: MosaicLayer): CSSProperties => {
   switch (layer.splitType) {
@@ -14,7 +9,17 @@ const layerStyleFor = (layer: MosaicLayer): CSSProperties => {
   }
 }
 
-export const MosaicView = ({ mosaic, time }: MosaicViewProps) => {
+interface MosaicViewProps {
+  mosaic: MosaicElement;
+  animationDepth: number,
+  time: number;
+}
+
+interface InternalMosaicViewProps extends MosaicViewProps {
+  ChildComponentType: ComponentType<MosaicViewProps>;
+}
+
+const InternalMosaicView = ({ mosaic, animationDepth, time, ChildComponentType }: InternalMosaicViewProps) => {
   switch (mosaic.type) {
     case MosaicElementType.Tile:
       return (
@@ -23,16 +28,23 @@ export const MosaicView = ({ mosaic, time }: MosaicViewProps) => {
       );
     case MosaicElementType.Layer: {
       const split = animatedSplit(mosaic, time);
+      const timeForSublayers = animationDepth > 1 ? time : 0;
       return (
         <div className="MosaicView_layer" style={layerStyleFor(mosaic)}>
           <div style={{ flexGrow: split }}>
-            <MosaicView mosaic={mosaic.first} time={time}/>
+            <ChildComponentType mosaic={mosaic.first} animationDepth={animationDepth - 1} time={timeForSublayers} />
           </div>
           <div style={{ flexGrow: 1 - split }}>
-            <MosaicView mosaic={mosaic.second} time={time}/>
+            <ChildComponentType mosaic={mosaic.second} animationDepth={animationDepth - 1} time={timeForSublayers} />
           </div>
         </div>
       );
     }
   }
-}
+};
+
+export const MosaicView = (props: MosaicViewProps) => <InternalMosaicView {...props} ChildComponentType={MosaicView} />;
+
+export const MosaicViewMemoized = React.memo(
+  (props: MosaicViewProps) => <InternalMosaicView {...props} ChildComponentType={MosaicViewMemoized} />
+);
