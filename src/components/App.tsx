@@ -9,11 +9,15 @@ function App() {
   const [animationDepth, setAnimationDepth] = useState(6);
   const [animated, setAnimated] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
+  const [frameLog, setFrameLog] = useState<number[]>([]);
 
   useEffect(() => {
     let frame = 0;
     const animateMosaic = (time: number) => {
       setCurrentTime(time);
+      // console.log(frameLog);
+      // console.log(newFrameLog);
+      setFrameLog(log => [...log.filter(x => x >= time - 1000), time]);
       frame = requestAnimationFrame(animateMosaic);
     };
     if (animated) {
@@ -73,6 +77,9 @@ function App() {
           time={currentTime}
           animationDepth={animationDepth}
         />
+      </div>
+      <div className="App__controlBarSection App__fpsMeter">
+        {frameLog.length} FPS
       </div>
     </div>
   );
